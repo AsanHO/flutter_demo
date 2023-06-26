@@ -77,9 +77,9 @@ class _HomePageState extends State<HomePage> {
                       trailing: Text(memo.updatedAt == null
                           ? ""
                           : memo.updatedAt.toString().substring(0, 19)),
-                      onTap: () async {
+                      onTap: () {
                         // 아이템 클릭시
-                        await Navigator.push(
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (_) => DetailPage(
@@ -87,19 +87,16 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         );
-                        if (memo.content.isEmpty) {
-                          memoService.deleteMemo(index: index);
-                        }
                       },
                     );
                   },
                 ),
           floatingActionButton: FloatingActionButton(
             child: const Icon(Icons.add),
-            onPressed: () async {
+            onPressed: () {
               // + 버튼 클릭시 메모 생성 및 수정 페이지로 이동
               memoService.createMemo(content: '');
-              await Navigator.push(
+              Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (_) => DetailPage(
@@ -107,9 +104,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               );
-              if (memoList[memoService.memoList.length - 1].content.isEmpty) {
-                memoService.deleteMemo(index: memoList.length - 1);
-              }
             },
           ),
         );

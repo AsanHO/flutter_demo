@@ -46,6 +46,9 @@ class MemoService extends ChangeNotifier {
   ];
 
   createMemo({required String content}) {
+    if (content == "") {
+      return;
+    }
     Memo memo = Memo(content: content, updatedAt: DateTime.now());
     memoList.add(memo);
     notifyListeners(); // Consumer<MemoService>의 builder 부분을 호출해서 화면 새로고침
@@ -83,7 +86,7 @@ class MemoService extends ChangeNotifier {
 
     String jsonString = jsonEncode(memoJsonList);
     // '[{"content": "1"}, {"content": "2"}]'
-
+    print(jsonString);
     prefs.setString('memoList', jsonString);
   }
 
@@ -95,7 +98,7 @@ class MemoService extends ChangeNotifier {
 
     List memoJsonList = jsonDecode(jsonString);
     // [{"content": "1"}, {"content": "2"}]
-
+    print(memoJsonList);
     memoList = memoJsonList.map((json) => Memo.fromJson(json)).toList();
   }
 }
